@@ -7,7 +7,7 @@ const router = require('express').Router()
 router.post('/register', (req, res) => {
   let newUser = req.body;
 
-  const rounds = process.env.HASH_ROUNDS || 5;
+  const rounds = process.env.HASH_ROUNDS || 10;
 
   newUser.password = bcrypt.hashSync(newUser.password, rounds);
 
@@ -21,7 +21,7 @@ router.post('/login', (req, res) => {
     if (user) {
       if (bcrypt.compareSync(password, user.password)) {
         const token = generateToken(user);
-        res.status(200).json({data: {username, token}})
+        res.status(200).json({username, token})
       }
       else res.status(401).json({ error: "Incorrect password" })
     }
