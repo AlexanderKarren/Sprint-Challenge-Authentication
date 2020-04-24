@@ -7,11 +7,11 @@ const router = require('express').Router()
 router.post('/register', (req, res) => {
   let newUser = req.body;
 
-  const rounds = process.env.HASH_ROUNDS || 14;
+  const rounds = process.env.HASH_ROUNDS || 5;
 
   newUser.password = bcrypt.hashSync(newUser.password, rounds);
 
-  Users.register(newUser).then(([user]) => res.status(200).json(user))
+  Users.register(newUser).then(([user]) => res.status(201).json(user))
   .catch(error => res.status(500).json({ error: error.message }))
 });
 
